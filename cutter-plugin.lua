@@ -18,18 +18,6 @@ end
 cuts = {}
 -----------------------------------------------
 
--- helper function to copy array elements by value
-function shallow_copy(t)
-    local t2 = {}
-    for k, v in pairs(t) do
-        t2[k] = v
-    end
-    return t2
-end
-
-function close()
-end
-
 function format_time(s)
     s = s / 1000000
     local hours = s / (60 * 60)
