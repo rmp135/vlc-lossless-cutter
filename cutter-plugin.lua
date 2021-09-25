@@ -79,9 +79,14 @@ end
 function save()
     uri = vlc.input.item():uri()
     filepath = vlc.strings.decode_uri(uri)
-    filepath = string.sub(filepath,9)
+    -- Handle UNC paths.
+    if (string.sub(filepath, 8, 8) == "/")
+    then
+        filepath = string.sub(filepath, 9)
+    else
+        filepath = string.sub(filepath, 6)
+    end
     filepath = filepath .. ".csv"
-    vlc.msg.dbg(filepath)
     file = io.open(filepath, "w")
     for _, value in pairs(cuts) do
         file:write(string.format(value.starttime / 10^6, '%4f') .. ","..  string.format(value.endtime / 10^6, '%6.4f') ..",".."\n")
@@ -134,4 +139,3 @@ function remove_cut()
     cuts[sel] = nil
     refresh_cuts()
 end
-
